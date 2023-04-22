@@ -1,0 +1,9 @@
+<header class="flex items-center gap-4 px-4 border-bottom border-2">
+  <button mat-button (click)="sidebar.toggle()" *ngIf="sidebar">
+    <mat-icon>menu-burger</mat-icon>
+  </button>
+
+  <h1 class="!m-0 !p-0">RTB Game</h1>
+
+  <app-navigation></app-navigation>
+</header>

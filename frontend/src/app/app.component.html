@@ -1,0 +1,15 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer #drawer="matDrawer" class="example-sidenav" mode="side">
+    <app-ui-settings></app-ui-settings>
+  </mat-drawer>
+
+  <div class="app-container h-screen overflow-auto flex flex-col">
+    <app-header [sidebar]="drawer"></app-header>
+
+    <div class="grow overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-drawer-container>
+
+

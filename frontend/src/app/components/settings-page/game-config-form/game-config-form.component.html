@@ -1,0 +1,151 @@
+<h2>Game configuration</h2>
+<form ngForm #form="ngForm" [disabled]="disabled" (submit)="onSubmit()">
+  <div class="flex flex-col gap-3">
+    <div class="control_container">
+      <mat-form-field class="w-full">
+        <mat-label>Number of impressions</mat-label>
+        <input
+          matInput
+          [(ngModel)]="model.impressions_total"
+          name="impressions_total"
+          required
+          appIsIntegerValidator
+          appRangeValidator [min]="0"
+        >
+      </mat-form-field>
+    </div>
+
+
+    <div class="control_container">
+      <mat-form-field class="w-full">
+        <mat-label>Budget</mat-label>
+        <input
+          matInput
+          [(ngModel)]="model.budget"
+          name="budget"
+          required
+          appIsFloatValidator
+          appRangeValidator [min]="0"
+        >
+      </mat-form-field>
+    </div>
+
+
+    <div class="control_container">
+      <label appRedTextIfInvalid [control]="form.controls['auction_type']">Auction type
+        <mat-radio-group [(ngModel)]="model.auction_type" name="auction_type" required>
+          <mat-radio-button [value]="1">1st price</mat-radio-button>
+          <mat-radio-button [value]="2">2nd price</mat-radio-button>
+        </mat-radio-group>
+      </label>
+    </div>
+
+
+    <div class="control_container">
+      <mat-form-field class="w-full">
+        <mat-label>Impression revenue</mat-label>
+        <input
+          matInput
+          [(ngModel)]="model.impression_revenue"
+          name="impression_revenue"
+          required
+          appIsIntegerValidator
+          appRangeValidator [min]="0"
+        >
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Click revenue</mat-label>
+        <input
+          matInput
+          [(ngModel)]="model.click_revenue"
+          name="click_revenue"
+          required
+          appIsIntegerValidator
+          appRangeValidator [min]="0"
+        >
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Conversion revenue</mat-label>
+        <input
+          matInput
+          [(ngModel)]="model.conversion_revenue"
+          name="conversion_revenue"
+          required
+          appIsIntegerValidator
+          appRangeValidator [min]="0"
+        >
+      </mat-form-field>
+    </div>
+
+
+
+    <div class="control_container">
+      <label appRedTextIfInvalid [control]="form.controls['mode']">Game mode
+        <mat-radio-group [(ngModel)]="model.mode" (ngModelChange)="gameModeChanged($event)"  name="mode" required>
+          <mat-radio-button value="free">Free</mat-radio-button>
+          <mat-radio-button value="script">Script</mat-radio-button>
+        </mat-radio-group>
+      </label>
+    </div>
+
+
+    <div class="control_container">
+      <label appRedTextIfInvalid [control]="form.controls['game_goal']">Game goal
+        <mat-radio-group [(ngModel)]="model.game_goal" name="game_goal" required>
+          <mat-radio-button value="revenue">Max. revenue</mat-radio-button>
+          <mat-radio-button value="cpc">Min. CPC</mat-radio-button>
+        </mat-radio-group>
+      </label>
+    </div>
+
+        <div class="control_container">
+      <mat-checkbox
+        [disabled]="model.mode == 'free'"
+        [(ngModel)]="model.frequency_capping_enabled"
+        labelPosition="after"
+        name="frequency_capping_enabled"
+      >
+        <span class="text-md">Enable frequency capping</span>
+
+      </mat-checkbox>
+
+      <mat-form-field class="w-full">
+        <mat-label>Frequency capping</mat-label>
+        <input
+          matInput
+          [disabled]="!model.frequency_capping_enabled || model.mode == 'free'"
+          [(ngModel)]="model.frequency_capping"
+          name="frequency_capping"
+          [required]="model.frequency_capping_enabled"
+          appIsIntegerValidator
+          appRangeValidator [min]="0"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="control_container">
+      <mat-checkbox
+        [disabled]="model.mode == 'free'"
+        [(ngModel)]="model.blocked_categories_enabled"
+        labelPosition="after"
+        name="blocked_categories_enabled"
+      >
+        <span class="text-md">Enable blocked categories</span>
+      </mat-checkbox>
+    </div>
+
+    <div class="control_container">
+      <mat-checkbox
+        [(ngModel)]="model.ads_txt_enabled"
+        labelPosition="after"
+        name="ads_txt_enabled"
+      >
+        <span class="text-md">Enable ads.txt</span>
+      </mat-checkbox>
+    </div>
+
+    <button [disabled]="disabled" mat-raised-button type="submit" color="primary" >Save</button>
+  </div>
+</form>

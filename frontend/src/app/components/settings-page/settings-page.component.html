@@ -1,0 +1,5 @@
+<div class="pt-4 flex justify-center text-red-500 text-lg font-medium" *ngIf="gameState.state$ | async">The game is started.</div>
+<div class="pt-4 grid grid-cols-2 grid-rows-1 gap-28 px-28">
+  <app-game-config-form [disabled]="!!(gameState.state$ | async)"></app-game-config-form>
+  <app-teams-configuration [disabled]="!!(gameState.state$ | async)"></app-teams-configuration>
+</div>

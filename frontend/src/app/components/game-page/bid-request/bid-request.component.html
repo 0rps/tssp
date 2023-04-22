@@ -1,0 +1,14 @@
+<h2>Ad Slot</h2>
+<ng-container *ngIf="bidRequest as request;">
+  <app-parameter name="Domain">{{request.site.domain}}</app-parameter>
+  <app-parameter name="pCTR">{{request.click.prob | percent : '1.0-3'}}</app-parameter> <!--Doc https://angular.io/api/common/PercentPipe -->
+  <app-parameter name="pCVR">{{request.conv.prob | percent: '1.0-3'}}</app-parameter> <!--Doc https://angular.io/api/common/PercentPipe -->
+  <app-parameter name="Size">{{request.imp.banner.w + 'x' + request.imp.banner.h}}</app-parameter>
+
+<!--  <app-parameter name="User">{{request.user.id}}</app-parameter>-->
+  <app-parameter *ngIf="showCreativeExtraMeta()" name="Blocked categories">{{request.bcat.join(', ')}}</app-parameter>
+
+<!--  <app-parameter name="Extra1" *ngIf="uiSettings.settings.showExtraParam1 | async">Test extra</app-parameter>-->
+
+</ng-container>
+

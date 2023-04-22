@@ -1,0 +1,50 @@
+<div class="px-8 py-6">
+
+  <h2>UI configuration</h2>
+
+  <div class="flex flex-col">
+    <mat-checkbox
+      *ngFor="let setting of settingsList"
+      [(ngModel)]="model[setting.prop]"
+      (ngModelChange)="uiSettings.setSetting(setting.prop, $event)"
+      labelPosition="after"
+    >
+      <span class="text-md">{{setting.label}}</span>
+    </mat-checkbox>
+
+    <!--<mat-checkbox
+      [(ngModel)]="model.showTeamImplClConv"
+      (ngModelChange)="uiSettings.setSetting('showTeamImplClConv', $event)"
+      labelPosition="before"
+    >
+      <span class="text-md">Show team imp, click, conv</span>
+    </mat-checkbox>
+
+    <mat-checkbox
+      [(ngModel)]="model.showFinalProbabilities"
+      labelPosition="before"
+    >
+      <span class="text-md">Show final probabilities</span>
+    </mat-checkbox>
+
+    <mat-checkbox
+      [(ngModel)]="model.showLogs"
+      labelPosition="before"
+    >
+      <span class="text-md">Show logs</span>
+    </mat-checkbox>
+
+    <mat-checkbox
+      [(ngModel)]="model.showExtraParam1"
+      labelPosition="before"
+    >
+      <span class="text-md">*Show additional parameter 1%</span>
+    </mat-checkbox>-->
+  </div>
+</div>
+
+<div class="px-8 py-6 border-t-2">
+  <button class="w-full" mat-flat-button (click)="onGameResetClick()" color="primary">Reset game</button>
+</div>
+
+

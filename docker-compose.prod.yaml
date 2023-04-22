@@ -1,0 +1,73 @@
+version: "3.3"
+
+services:
+  nginx:
+    image: nginx:1.23
+    container_name: sspnginx
+    volumes:
+      - ./frontend/dist/frontend:/var/www/frontend
+      - ./resources/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./resources/nginx/.htpasswd:/etc/nginx/.htpasswd  # add user: sudo htpasswd ./nginx/.htpasswd username_here
+    ports:
+      - "14592:80"
+    depends_on:
+      - backend
+
+  mongodb:
+    env_file:
+      - .env
+    image: mongo:4.4
+    container_name: sspmongodb
+    restart: unless-stopped
+    volumes:
+      - db-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGODB_DB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+
+  redis:
+    image: redis:6.2.11
+
+  celery:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: unless-stopped
+    container_name: sspcelery
+    command: celery --app app.celery_app worker --loglevel=info -c 1
+    volumes:
+      - ./backend:/app/
+    depends_on:
+      - redis
+      - mongodb
+
+  dsp.test:
+    build:
+      context: test_dsp
+    stop_signal: SIGINT
+
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: unless-stopped
+    container_name: sspback
+    command: /start.sh
+    volumes:
+      - ./backend:/app/
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGODB_DB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    depends_on:
+      - redis
+      - mongodb
+      - celery
+      - dsp.test
+volumes:
+  db-data:

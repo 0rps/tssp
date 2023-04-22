@@ -1,0 +1,20 @@
+<h2>Creative winner</h2>
+<ng-container *ngIf="bidResponse as response; else noBid">
+
+  <app-parameter name="tDSP">{{response.team}}</app-parameter>
+  <app-parameter *ngIf="showCreativeExtraMeta()" name="External id">{{response.external_id}}</app-parameter>
+  <app-parameter name="Price">{{response.price | number : '1.0-3'}}</app-parameter> <!--Doc https://angular.io/api/common/DecimalPipe -->
+  <app-parameter name="Final pCTR" *ngIf="uiSettings.settings.showFinalProbabilities | async">{{response.final_pctr | percent : '1.0-3'}}</app-parameter> <!--Doc https://angular.io/api/common/PercentPipe -->
+  <app-parameter name="Final pCVR" *ngIf="uiSettings.settings.showFinalProbabilities | async">{{response.final_pcvr | percent: '1.0-3'}}</app-parameter> <!--Doc https://angular.io/api/common/PercentPipe -->
+  <app-parameter name="Click">{{response.click}}</app-parameter>
+  <app-parameter name="Conversion">{{response.conversion}}</app-parameter>
+  <app-parameter name="Size">{{response.image_size.w + 'x' + response.image_size.h}}</app-parameter>
+  <app-parameter *ngIf="showCreativeExtraMeta()" name="Categories">{{response.cat.join(', ')}}</app-parameter>
+  <div #creative class="bg-gray-200 creative border border-black"></div>
+
+</ng-container>
+
+<ng-template #noBid>
+  <span class="font-medium text-lg">No bids</span>
+</ng-template>
+

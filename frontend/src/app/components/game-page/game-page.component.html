@@ -1,0 +1,48 @@
+<div class="overflow-auto grow text-lg p-4">
+  <ng-container *ngIf="showScoreboard; then scoreboard; else game"></ng-container>
+
+  <ng-template #game>
+    <ng-container *ngIf="gameState.state$ | async as state">
+      <h1 class="flex justify-center">Round: {{state.round}}</h1>
+      <div class="flex justify-center" *ngIf="state && state.has_next_round">
+        <button class="w-48" mat-raised-button color="primary" [disabled]="!nextRoundButtonIsActive"  (click)="nextRound()">Next round</button>
+      </div>
+
+      <div class="flex justify-center" *ngIf="state && !state.has_next_round">
+        <button class="w-48" mat-raised-button color="primary" (click)="onScoreboardButtonClick()">Scoreboard</button>
+      </div>
+
+      <div class="mt-4 grid grid-cols-3 grid-rows-1 gap-12 px-4">
+        <app-round-scoreboard
+          [teams]="state.teams"
+        ></app-round-scoreboard>
+        <app-bid-request
+          [bidRequest]="state.bidrequest"
+        ></app-bid-request>
+        <app-bid-response
+          [bidResponse]="state.bidresponse"
+          [creativeWidth]="state.bidrequest.imp.banner.w"
+          [creativeHeight]="state.bidrequest.imp.banner.h"
+        ></app-bid-response>
+      </div>
+    </ng-container>
+
+    <div class="flex h-full justify-center items-center" *ngIf="!showScoreboard && (gameState.state$ | async) === null">
+      <button class="w-48" mat-raised-button color="primary" (click)="startGame()">Start game</button>
+    </div>
+  </ng-template>
+
+  <ng-template #scoreboard>
+    <div class="flex flex-col h-full justify-center items-center gap-8" *ngIf="scoreBoard$ | async as teams">
+      <app-scoreboard [teams]="teams"></app-scoreboard>
+      <button class="w-48" mat-raised-button color="primary" (click)="reset()">Reset game</button>
+    </div>
+  </ng-template>
+
+</div>
+
+<footer *ngIf="!showScoreboard && (uiSettings.settings.showLogs | async)" class="border-top border-2 h-72 overflow-auto">
+  <ng-container *ngIf="gameState.state$ | async as state">
+    <app-logs [logs]="state.logs"></app-logs>
+  </ng-container>
+</footer>

@@ -1,0 +1,14 @@
+pytest==7.2.2
+python-multipart==0.0.5
+uvicorn[standard]==0.20.0
+gunicorn==20.1.0
+fastapi==0.92.0
+mongoengine==0.27.0
+pymongo==4.3.3
+python-dateutil==2.8.2
+log4mongo==1.7.0
+httpx==0.23.3
+Pillow==9.4.0
+celery[redis]==5.2.7
+aioprometheus[starlette]==23.3.0
+python-dotenv==1.0.0

@@ -1,0 +1,41 @@
+<h2>Team configuration</h2>
+<form ngForm [disabled]="disabled" class="flex flex-col gap-3" #form="ngForm" (submit)="onSubmit()">
+  <div class="control_container">
+    <mat-form-field class="w-full">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        [(ngModel)]="model.name"
+        name="name"
+        required
+      >
+    </mat-form-field>
+  </div>
+
+
+  <div class="control_container">
+    <mat-form-field class="w-full">
+      <mat-label>API address</mat-label>
+      <input
+        matInput
+        [(ngModel)]="model.api_url"
+        name="api_url"
+        required
+      >
+    </mat-form-field>
+  </div>
+
+  <div class="control_container">
+    <mat-form-field class="w-full">
+      <mat-label>Token</mat-label>
+      <input
+        matInput
+        [(ngModel)]="model.bearer_token"
+        name="bearer_token"
+        type="password"
+      >
+    </mat-form-field>
+  </div>
+
+  <button [disabled]="disabled" mat-raised-button type="submit" color="primary" >Add team</button>
+</form>

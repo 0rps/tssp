@@ -1,0 +1,9 @@
+<h2>Teams</h2>
+<div class="flex flex-col gap-2">
+  <div class="p-2 flex items-center justify-between border border-1 rounded bg-gray-100" *ngFor="let team of list$ | async">
+    <span class="text-md truncate">{{team.name}}</span>
+    <button [disabled]="disabled" mat-raised-button color="warn" (click)="remove(team.id)">Remove</button>
+  </div>
+</div>
+
+

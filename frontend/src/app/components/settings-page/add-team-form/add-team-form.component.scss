@@ -1,0 +1,9 @@
+:host {
+  .control_container {
+    @apply flex flex-row items-center gap-4 w-full;
+  }
+
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
